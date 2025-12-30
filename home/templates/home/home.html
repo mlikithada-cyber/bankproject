@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyBank | Digital Banking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: linear-gradient(180deg, #003366, #00509e);
+            color: #fff;
+            padding-top: 30px;
+            position: fixed;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            padding: 15px 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .menu li:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .menu li span {
+            font-size: 16px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            width: 100%;
+        }
+
+        .header {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #003366;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #555;
+        }
+
+        /* Cards Section */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .card h3 {
+            color: #00509e;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content {
+                margin-left: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>MyBank</h2>
+        <ul class="menu">
+            <li><span>🏦 Open Account</span></li>
+            <li><span>💰 Deposits</span></li>
+            <li><span>💸 Withdrawals</span></li>
+            <li><span>💳 Cards</span></li>
+            <li><span>📦 Products</span></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Welcome to MyBank</h1>
+            <p>Your trusted digital banking partner. Manage accounts, transactions, and cards securely.</p>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                 <h3>
+                    <a href="{% url 'open_account' %}">Open Account</a>
+                 </h3>
+                <p>Create savings or current accounts instantly with minimal documentation.</p>
+            </div>
+
+            <div class="card">
+                <h3>Deposits</h3>
+                <p>Deposit funds securely and track your transaction history.</p>
+            </div>
+
+            <div class="card">
+                <h3>Withdrawals</h3>
+                <p>Withdraw money anytime with secure and fast processing.</p>
+            </div>
+
+            <div class="card">
+                <h3>Cards</h3>
+                <p>Manage debit and credit cards, set limits, and block cards easily.</p>
+            </div>
+
+            <div class="card">
+                <h3>Products</h3>
+                <p>Explore loans, fixed deposits, and other banking products.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
