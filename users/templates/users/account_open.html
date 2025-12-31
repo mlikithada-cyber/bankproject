@@ -98,6 +98,7 @@
 
     <form method="post">
         <!-- Username -->
+         {% csrf_token %}
         <div class="form-group">
             <label>Username</label>
             <input type="text" name="username" required>
