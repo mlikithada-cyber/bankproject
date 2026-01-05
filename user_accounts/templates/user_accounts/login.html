@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+
+    {% if success %}
+    <script>
+        alert("{{ success }}");
+    </script>
+    {% endif %}
+</head>
+<body>
+
+<h2>Login</h2>
+
+{% if error %}
+<p style="color:red;">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>Email:</label>
+    <input type="email" name="email" required><br><br>
+
+    <label>Password:</label>
+    <input type="password" name="psw" required><br><br>
+
+    <button type="submit">Login</button>
+</form>
+
+</body>
