@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .models import User_Accounts
+from django.core.mail import send_mail
+from django.conf import settings
 
 def signup(request):
     if request.method == "POST":
@@ -26,14 +28,21 @@ def signup(request):
             first_name=first_name,
             last_name=last_name,
             email=email,
-            password=password   # ⚠️ plain text (see note below)
+            password=password   # 
+        )
+
+        send_mail(
+            subject = "Welcome to My Bank",
+            message= f"Hi {first_name}, welcome to my bank. your username setup is successfull",
+            from_email = settings.DEFAULT_FROM_EMAIL,
+            recipient_list= {email}
         )
 
         return render(request, 'user_accounts/signup.html', {
             'success': 'Account created successfully'
         })
+    return render(request, 'user_accounts/signup.html') 
 
-    return render(request, 'user_accounts/signup.html')
 
 def login_user(request):
     error = ""
