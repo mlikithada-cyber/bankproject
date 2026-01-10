@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from .models import User_Accounts
+from django.shortcuts import render,redirect
+from .models import User_Accounts,EmailOtp
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib import messages
+import random
 
 def signup(request):
     if request.method == "POST":
@@ -52,15 +54,54 @@ def login_user(request):
         email = request.POST.get("email")
         password = request.POST.get("psw")
 
+       
         try:
-            user = User_Accounts.objects.get(email=email, password=password)
-            success = f"Login successful. Welcome {user.first_name}"
-            print("LOGIN SUCCESS:", email)
-        except User_Accounts.DoesNotExist:
-            error = "Invalid email or password"
-            print("LOGIN FAILED:", email)
+            user = User_Accounts.objects.get(email=email)
+            request.session["user_name"] = user.first_name
+            if user.password == password:
+                otp = str(random.randint(100000,999999))
+                EmailOtp.objects.create(email=email,otp=otp)
 
-    return render(request, "user_accounts/login.html", {
-        "error": error,
-        "success": success
-    })
+                send_mail(
+                    subject = "Login Code",
+                    message= f"Hi {request.session["user_name"]} , Login code for My Bank app is \n {otp}",
+                    from_email = settings.DEFAULT_FROM_EMAIL,
+                    recipient_list= {email}
+                )       
+                request.session["otp_email"] = user.email
+                messages.success(request,"otp sent successfully")
+                return redirect('otp')
+        except User_Accounts.DoesNotExist:
+            messages.error(request, "User does not exist")
+
+    return render(request, "user_accounts/login.html")
+
+def verify_otp(request):
+    if request.method == "POST":
+        otp = request.POST.get("otp")
+        print(otp)
+        email = request.session.get("otp_email")
+        print(email)
+        try:
+            res = EmailOtp.objects.filter(
+                email=email,
+                otp = otp,
+                is_verified=False
+            ).latest("created_at")
+
+            if res.is_expired():
+                messages.error(request,"otp timedout")
+                return redirect('signin')
+            res.is_verified = True
+            res.save()
+
+            user = User_Accounts.objects.get(email=email)
+            print("validated user")
+            request.session["user_name"] = user.first_name            
+            request.session["user_email"] = user.email
+            messages.success(request,"login success")
+            return redirect("/")
+        except EmailOtp.Exception:
+            messages.error(request, "invalid otp")
+    return render(request, "user_accounts/otp.html")
+        
