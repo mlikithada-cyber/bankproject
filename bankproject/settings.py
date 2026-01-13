@@ -134,7 +134,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'likhitha.mallempati@gmail.com'
-EMAIL_HOST_PASSWORD = 'bund gxun ipsv tbbp'
+EMAIL_HOST_PASSWORD = 'hshcccjshcjshchc'
 
 EMAIL_TIMEOUT = 10
 DEFAULT_FROM_EMAIL = 'likhitha.mallempati@gmail.com'
