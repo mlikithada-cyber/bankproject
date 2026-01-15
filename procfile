@@ -1,0 +1,1 @@
+web: gunicorn bankproject.wsgi:application --bind :$PORT
